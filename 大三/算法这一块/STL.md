@@ -1,4 +1,5 @@
 ---
+
 title: stl小合集
 date: 2024-10-17 22:00:00 +0800
 categories: [Algorithm, Stl]
@@ -133,3 +134,277 @@ bool  cmp(string a,string b)
   # 六、Set
   
   基于红黑树
+
+
+
+
+
+Vector复制
+
+法1：直接赋值
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v1 = {2, 4, 1, 5, 3};
+
+    // Assigning the vector v1 to vector v2
+    vector<int> v2 = v1;
+
+    for (auto i : v2)
+        cout << i << " ";
+    return 0;
+}
+
+
+```
+
+法2：assign()函数
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v1 = {2, 4, 1, 5, 3};
+    vector<int> v2;
+
+    // Copying the vector v1 into vector v
+    v2.assign(v1.begin(), v1.end());
+    
+    for (auto i : v2)
+        cout << i << " ";
+    return 0;
+
+}
+```
+
+
+
+## Using Vector insert()
+
+The [***\*vector insert()\**** ](https://www.geeksforgeeks.org/cpp/vector-insert-function-in-cpp-stl/)method provides a version that can copy all the elements from the given range. This can be used to copy the entire vector to another in a similar way as assign() method.
+
+```cpp
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v1 = {2, 4, 1, 5, 3};
+    vector<int> v2;
+
+    // Copying vector v1 into vector v2
+    v2.insert(v2.begin(), v1.begin(), v1.end());
+
+    for (auto i : v2)
+        cout << i << " ";
+    return 0;
+}
+```
+
+**Output**
+
+```
+2 4 1 5 3 
+```
+
+获取vector中的最大/最小值
+
+## Using std::minmax_element()
+
+The [std::minmax_element()](https://www.geeksforgeeks.org/cpp/stdminmax-stdminmax_element-c-stl/) function can be used to find the maximum and the minimum element in the array at once. It takes the iterator to the beginning and the end of the vector and returns a pair in which first member is minimum, and second member is maximum.
+
+### Syntax
+
+> ***\*std::minmax_element\****(v.begin(), v.end());
+
+where, ****\*v\***** is the vector.
+
+### Example
+
+
+
+
+
+```cpp
+
+// C++ Program to find the minimum element in a vector
+// using std::minmax_element()
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v = {2, 4, 1, 5, 3};
+
+    // Finding both minimum and maximum elements
+    auto p = minmax_element(v.begin(), v.end());
+
+    cout << *p.first;
+    return 0;
+}
+```
+
+**Output**
+
+```
+1
+```
+
+***\*Time Complexity:\**** O(n), where ***\*n\**** is the number of elements in the vector.
+***\*Auxiliary Space:\**** O(1)
+
+## Using std::accumulate()
+
+Generally, the [***\*std::accumulate()\****](https://www.geeksforgeeks.org/cpp/accumulate-and-partial_sum-in-c-stl-numeric-header/) method is used to find the sum of all elements in the given range. But we can also find the minimum element in the vector by custom comparison function.
+
+### Syntax
+
+> ***\*std::accumulate\****(v.begin(), v.end(), i, comp);
+
+where, ****\*v\***** is the vector, ****\*i\***** is the initial value, and ****\*comp\***** is the comparator.
+
+### Example
+
+
+
+
+
+```cpp
+
+// C++ program to find the minimum element
+// in std::vector using std::accumulate()
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v = {2, 4, 1, 5, 3};
+
+    // Finding the minimum element in vector
+    // using std::accumulate() along with
+    // custom comparison
+    int min = accumulate(v.begin(), v.end(),
+                         v[0], [](int a, int b) { 
+                           return std::min(a, b);
+                         });
+
+    cout << min << endl;
+    return 0;
+}
+```
+
+**Output**
+
+```
+1
+```
+
+***\*Time Complexity:\**** O(n), where ***\*n\**** is the number of elements in the vector.
+***\*Auxiliary Space:\**** O(1)
+
+
+
+Given a vector, find the maximum element of the vector using STL in C++.
+
+***\*Example\****
+
+> ***\*Input:\**** v = {2, 4, 1, 5, 3}
+> ***\*Output:\**** 5
+> ***\*Explanation:\**** 5 is the largest element of vector.
+>
+> ***\*Input:\**** v = {11, 23, 3, 5, 24}
+> ***\*Output:\**** 24
+> ***\*Explanation:\**** 24 is the largest element of the given range.
+
+STL provides the following different methods to find the maximum element in the vector in C++.
+
+Table of Content
+
+- [Using std::max_element()](https://www.geeksforgeeks.org/cpp/how-to-find-the-maximum-element-of-a-vector-using-stl-in-c/#using-max_element)
+- [Using std::minmax_element()](https://www.geeksforgeeks.org/cpp/how-to-find-the-maximum-element-of-a-vector-using-stl-in-c/#using-stdminmax_element)
+- [Using Priority Queue](https://www.geeksforgeeks.org/cpp/how-to-find-the-maximum-element-of-a-vector-using-stl-in-c/#using-stdaccumulate)
+- [Using std::sort()](https://www.geeksforgeeks.org/cpp/how-to-find-the-maximum-element-of-a-vector-using-stl-in-c/#by-sorting-in-ascending-order)
+
+## Using std::max_element()
+
+The simplest way to find the maximum element in the vector is by using the [***\*std::max_element()\****](https://www.geeksforgeeks.org/cpp/max_element-in-cpp/). This function returns the iterator to the maximum element in the given range of elements.
+
+### Syntax
+
+> ***\*std::max_element\****(v.begin(), v.end());
+
+where, ****\*v\***** is the vector.
+
+### Example
+
+
+
+
+
+```cpp
+
+// C++ program to find maximum element
+// in vector using std::max_element()
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v = {2, 4, 1, 5, 3};
+
+    // Finding the maximum element in vector
+    // using std::max_element()
+    cout << *max_element(v.begin(), v.end());
+    return 0;
+}
+```
+
+**Output**
+
+```
+5
+```
+
+***\*Time Complexity:\**** O(n), where ***\*n\**** is the number of elements in the vector.
+***\*Auxiliary Space:\**** O(1)
+
+## Using std::minmax_element()
+
+The [***\*std::minmax_element()\****](https://www.geeksforgeeks.org/cpp/stdminmax-stdminmax_element-c-stl/) function can be used to find the maximum and the minimum element in the STL container at once. It returns a pair in which pair::first is minimum, and pair::second is maximum.
+
+### Syntax
+
+> ***\*std::minmax_element\****(v.begin(), v.end());
+
+where, ****\*v\***** is the vector.
+
+### Example
+
+```cpp
+
+// C++ Program to find maximum element in vector
+// using std::minmax_element()
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v = {2, 4, 1, 5, 3};
+
+    // Finding both minimum and maximum elements
+    auto p = minmax_element(v.begin(), v.end());
+
+    // Printing the maximum element
+    cout << *p.second;
+    return 0;
+}
+```
+
+**Output**
+
+```
+5
+```
+
+***\*Time Complexity:\**** O(n), where ***\*n\**** is the number of elements in the vector.
+***\*Auxiliary Space:\**** O(1)
